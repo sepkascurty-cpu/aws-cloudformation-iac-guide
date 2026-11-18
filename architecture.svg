@@ -1,0 +1,262 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1180" viewBox="0 0 1200 1180" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1200" height="1180" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="600" y="34" font-size="22" font-weight="bold" fill="#232F3E" text-anchor="middle">AWS CloudFormation — 3-Tier Stack Deployed from One Template</text>
+  <text x="600" y="58" font-size="13" fill="#666666" text-anchor="middle">Developer &#8594; Template (S3) &#8594; CloudFormation &#8594; Stack &#8594; ALB &#8594; EC2 (web / app) &#8594; RDS + ElastiCache</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#232F3E"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#FF9900"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#1E8900"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#7A5AC8"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#527FFF"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#D13239"/>
+    </marker>
+  </defs>
+
+  <!-- ================= Top row: authoring flow ================= -->
+  <!-- Developer -->
+  <g>
+    <rect x="30" y="100" width="180" height="64" rx="4" fill="#232F3E"/>
+    <text x="120" y="126" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Developer</text>
+    <text x="120" y="144" font-size="11" fill="#ffffff" text-anchor="middle">Writes template.yaml</text>
+    <text x="120" y="180" font-size="11" fill="#232F3E" text-anchor="middle">Developer</text>
+    <text x="120" y="195" font-size="11" font-style="italic" fill="#555" text-anchor="middle">You — one file, git versioned</text>
+  </g>
+
+  <!-- Template -->
+  <g>
+    <rect x="250" y="100" width="180" height="64" rx="4" fill="#FF9900"/>
+    <text x="340" y="126" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Template (YAML)</text>
+    <text x="340" y="144" font-size="11" fill="#ffffff" text-anchor="middle">Parameters &#183; Mappings &#183; Resources</text>
+    <text x="340" y="180" font-size="11" fill="#232F3E" text-anchor="middle">CloudFormation template</text>
+    <text x="340" y="195" font-size="11" font-style="italic" fill="#555" text-anchor="middle">The blueprint of the stack</text>
+  </g>
+  <line x1="210" y1="132" x2="247" y2="132" stroke="#232F3E" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="228" y="120" font-size="11" font-weight="bold" fill="#232F3E" text-anchor="middle">writes</text>
+
+  <!-- S3 template storage -->
+  <g>
+    <rect x="470" y="100" width="170" height="64" rx="4" fill="#1E8900"/>
+    <text x="555" y="126" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Amazon S3</text>
+    <text x="555" y="144" font-size="11" fill="#ffffff" text-anchor="middle">Template storage</text>
+    <text x="555" y="180" font-size="11" fill="#232F3E" text-anchor="middle">Amazon S3</text>
+    <text x="555" y="195" font-size="11" font-style="italic" fill="#555" text-anchor="middle">Versioned template bucket</text>
+  </g>
+  <line x1="430" y1="132" x2="467" y2="132" stroke="#1E8900" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="448" y="120" font-size="11" font-weight="bold" fill="#1E8900" text-anchor="middle">upload</text>
+
+  <!-- CloudFormation -->
+  <g>
+    <rect x="690" y="100" width="200" height="64" rx="4" fill="#FF9900"/>
+    <text x="790" y="126" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">AWS CloudFormation</text>
+    <text x="790" y="144" font-size="11" fill="#ffffff" text-anchor="middle">Stack engine &#183; change sets</text>
+    <text x="790" y="180" font-size="11" fill="#232F3E" text-anchor="middle">AWS CloudFormation</text>
+    <text x="790" y="195" font-size="11" font-style="italic" fill="#555" text-anchor="middle">Creates / updates / deletes the stack</text>
+  </g>
+  <line x1="640" y1="132" x2="687" y2="132" stroke="#FF9900" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="663" y="120" font-size="11" font-weight="bold" fill="#FF9900" text-anchor="middle">CreateStack</text>
+
+  <!-- IAM service role -->
+  <g>
+    <rect x="930" y="100" width="230" height="64" rx="4" fill="#FF9900"/>
+    <text x="1045" y="126" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">IAM Service Role</text>
+    <text x="1045" y="144" font-size="11" fill="#ffffff" text-anchor="middle">Least-privilege deploy role</text>
+    <text x="1045" y="180" font-size="11" fill="#232F3E" text-anchor="middle">IAM service role</text>
+    <text x="1045" y="195" font-size="11" font-style="italic" fill="#555" text-anchor="middle">Limits what the stack may create</text>
+  </g>
+  <line x1="1045" y1="164" x2="890" y2="164" stroke="#FF9900" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowOrange)"/>
+  <text x="965" y="152" font-size="11" font-weight="bold" fill="#FF9900" text-anchor="middle">assumes</text>
+
+  <!-- ================= Safety strip ================= -->
+  <g>
+    <rect x="120" y="230" width="200" height="52" rx="4" fill="#7A5AC8"/>
+    <text x="220" y="252" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Change Set</text>
+    <text x="220" y="269" font-size="11" fill="#ffffff" text-anchor="middle">Preview before apply</text>
+  </g>
+  <g>
+    <rect x="360" y="230" width="200" height="52" rx="4" fill="#527FFF"/>
+    <text x="460" y="252" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Drift Detection</text>
+    <text x="460" y="269" font-size="11" fill="#ffffff" text-anchor="middle">Finds console edits</text>
+  </g>
+  <g>
+    <rect x="600" y="230" width="200" height="52" rx="4" fill="#D13239"/>
+    <text x="700" y="252" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Amazon SNS</text>
+    <text x="700" y="269" font-size="11" fill="#ffffff" text-anchor="middle">Stack event alerts</text>
+  </g>
+  <g>
+    <rect x="840" y="230" width="220" height="52" rx="4" fill="#FF9900"/>
+    <text x="950" y="252" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">CloudWatch Events</text>
+    <text x="950" y="269" font-size="11" fill="#ffffff" text-anchor="middle">Stack state changes</text>
+  </g>
+  <line x1="790" y1="164" x2="790" y2="227" stroke="#FF9900" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="830" y="200" font-size="11" font-weight="bold" fill="#FF9900">safety checks</text>
+
+  <!-- ================= AWS Cloud ================= -->
+  <rect x="30" y="320" width="1140" height="800" fill="none" stroke="#232F3E" stroke-width="2"/>
+  <text x="50" y="346" font-size="16" font-weight="bold" fill="#232F3E">AWS Cloud — ap-southeast-1</text>
+  <text x="1120" y="346" font-size="12" fill="#555555" text-anchor="end">Stack: web-app-prod</text>
+
+  <!-- VPC -->
+  <rect x="60" y="360" width="1080" height="740" fill="none" stroke="#1E8900" stroke-width="2"/>
+  <text x="80" y="386" font-size="14" font-weight="bold" fill="#1E8900">VPC  10.0.0.0/16</text>
+
+  <!-- ALB spanning both AZs -->
+  <g>
+    <rect x="430" y="400" width="340" height="52" rx="4" fill="#7A5AC8"/>
+    <text x="600" y="422" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">Elastic Load Balancing</text>
+    <text x="600" y="439" font-size="11" fill="#ffffff" text-anchor="middle">Application Load Balancer (internet-facing)</text>
+  </g>
+  <text x="600" y="472" font-size="11" fill="#232F3E" text-anchor="middle">Application Load Balancer</text>
+  <text x="600" y="487" font-size="11" font-style="italic" fill="#555" text-anchor="middle">HTTP :80 &#183; health checks /health</text>
+  <line x1="790" y1="282" x2="700" y2="397" stroke="#FF9900" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="760" y="330" font-size="11" font-weight="bold" fill="#FF9900" text-anchor="middle">provisions</text>
+
+  <!-- AZ 1 -->
+  <rect x="80" y="500" width="510" height="580" fill="none" stroke="#527FFF" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <text x="335" y="524" font-size="13" font-weight="bold" fill="#527FFF" text-anchor="middle">Availability Zone 1</text>
+
+  <!-- AZ 2 -->
+  <rect x="610" y="500" width="510" height="580" fill="none" stroke="#527FFF" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <text x="865" y="524" font-size="13" font-weight="bold" fill="#527FFF" text-anchor="middle">Availability Zone 2</text>
+
+  <!-- Public subnet AZ1 -->
+  <rect x="100" y="540" width="470" height="96" fill="#E6F4EA" stroke="#1E8900" stroke-width="1"/>
+  <text x="335" y="562" font-size="12" font-weight="bold" fill="#1E8900" text-anchor="middle">Public Subnet  10.0.0.0/24</text>
+  <g>
+    <rect x="160" y="572" width="150" height="48" rx="4" fill="#1E8900"/>
+    <text x="235" y="592" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">NAT Gateway</text>
+    <text x="235" y="608" font-size="11" fill="#ffffff" text-anchor="middle">Egress for private subnets</text>
+  </g>
+  <text x="420" y="592" font-size="11" fill="#232F3E" text-anchor="middle">Internet Gateway</text>
+  <text x="420" y="607" font-size="11" font-style="italic" fill="#555" text-anchor="middle">attached to the VPC</text>
+
+  <!-- Public subnet AZ2 -->
+  <rect x="630" y="540" width="470" height="96" fill="#E6F4EA" stroke="#1E8900" stroke-width="1"/>
+  <text x="865" y="562" font-size="12" font-weight="bold" fill="#1E8900" text-anchor="middle">Public Subnet  10.0.1.0/24</text>
+  <g>
+    <rect x="690" y="572" width="150" height="48" rx="4" fill="#1E8900"/>
+    <text x="765" y="592" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">NAT Gateway</text>
+    <text x="765" y="608" font-size="11" fill="#ffffff" text-anchor="middle">Prod only (per-AZ HA)</text>
+  </g>
+  <text x="950" y="592" font-size="11" fill="#232F3E" text-anchor="middle">ALB node</text>
+  <text x="950" y="607" font-size="11" font-style="italic" fill="#555" text-anchor="middle">2nd AZ endpoint</text>
+
+  <!-- Arrows: ALB -> public subnets -->
+  <line x1="520" y1="452" x2="300" y2="537" stroke="#7A5AC8" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <line x1="680" y1="452" x2="900" y2="537" stroke="#7A5AC8" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <!-- Web subnet AZ1 -->
+  <rect x="100" y="656" width="470" height="140" fill="#EAF2FF" stroke="#527FFF" stroke-width="1"/>
+  <text x="335" y="678" font-size="12" font-weight="bold" fill="#527FFF" text-anchor="middle">Web Subnet (private)  10.0.10.0/24</text>
+  <rect x="120" y="688" width="430" height="92" fill="none" stroke="#FF9900" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="335" y="706" font-size="11" font-weight="bold" fill="#FF9900" text-anchor="middle">Auto Scaling Group — min 2 / max 4</text>
+  <g>
+    <rect x="160" y="716" width="140" height="52" rx="4" fill="#FF9900"/>
+    <text x="230" y="738" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">EC2 Instances</text>
+    <text x="230" y="755" font-size="11" fill="#ffffff" text-anchor="middle">Web servers</text>
+  </g>
+  <text x="420" y="738" font-size="11" fill="#232F3E" text-anchor="middle">Launch Template</text>
+  <text x="420" y="753" font-size="11" font-style="italic" fill="#555" text-anchor="middle">AMI via Mappings table</text>
+
+  <!-- Web subnet AZ2 -->
+  <rect x="630" y="656" width="470" height="140" fill="#EAF2FF" stroke="#527FFF" stroke-width="1"/>
+  <text x="865" y="678" font-size="12" font-weight="bold" fill="#527FFF" text-anchor="middle">Web Subnet (private)  10.0.11.0/24</text>
+  <rect x="650" y="688" width="430" height="92" fill="none" stroke="#FF9900" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="865" y="706" font-size="11" font-weight="bold" fill="#FF9900" text-anchor="middle">Auto Scaling Group — min 2 / max 4</text>
+  <g>
+    <rect x="690" y="716" width="140" height="52" rx="4" fill="#FF9900"/>
+    <text x="760" y="738" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">EC2 Instances</text>
+    <text x="760" y="755" font-size="11" fill="#ffffff" text-anchor="middle">Web servers</text>
+  </g>
+  <text x="950" y="738" font-size="11" fill="#232F3E" text-anchor="middle">Rolling updates</text>
+  <text x="950" y="753" font-size="11" font-style="italic" fill="#555" text-anchor="middle">1 instance at a time</text>
+
+  <!-- Arrows: ALB -> web tier -->
+  <line x1="400" y1="636" x2="250" y2="686" stroke="#7A5AC8" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <text x="300" y="655" font-size="11" font-weight="bold" fill="#7A5AC8" text-anchor="middle">HTTP :80</text>
+  <line x1="800" y1="636" x2="800" y2="686" stroke="#7A5AC8" stroke-width="2" marker-end="url(#arrowPurple)"/>
+
+  <!-- App subnet AZ1 -->
+  <rect x="100" y="816" width="470" height="110" fill="#FFF4E0" stroke="#FF9900" stroke-width="1"/>
+  <text x="335" y="838" font-size="12" font-weight="bold" fill="#FF9900" text-anchor="middle">App Subnet (private)  10.0.20.0/24</text>
+  <g>
+    <rect x="160" y="848" width="150" height="52" rx="4" fill="#FF9900"/>
+    <text x="235" y="870" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">EC2 Instances</text>
+    <text x="235" y="887" font-size="11" fill="#ffffff" text-anchor="middle">App / workers</text>
+  </g>
+  <text x="420" y="870" font-size="11" fill="#232F3E" text-anchor="middle">No internet route</text>
+  <text x="420" y="885" font-size="11" font-style="italic" fill="#555" text-anchor="middle">Egress via NAT only</text>
+
+  <!-- App subnet AZ2 -->
+  <rect x="630" y="816" width="470" height="110" fill="#FFF4E0" stroke="#FF9900" stroke-width="1"/>
+  <text x="865" y="838" font-size="12" font-weight="bold" fill="#FF9900" text-anchor="middle">App Subnet (private)  10.0.21.0/24</text>
+  <g>
+    <rect x="690" y="848" width="150" height="52" rx="4" fill="#FF9900"/>
+    <text x="765" y="870" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">EC2 Instances</text>
+    <text x="765" y="887" font-size="11" fill="#ffffff" text-anchor="middle">App / workers</text>
+  </g>
+  <text x="950" y="870" font-size="11" fill="#232F3E" text-anchor="middle">Background jobs</text>
+  <text x="950" y="885" font-size="11" font-style="italic" fill="#555" text-anchor="middle">Queues, batch work</text>
+
+  <!-- Arrows: web -> app -->
+  <line x1="230" y1="796" x2="230" y2="845" stroke="#FF9900" stroke-width="2" marker-end="url(#arrowOrange)"/>
+  <text x="250" y="825" font-size="11" font-weight="bold" fill="#FF9900">internal API</text>
+  <line x1="760" y1="796" x2="760" y2="845" stroke="#FF9900" stroke-width="2" marker-end="url(#arrowOrange)"/>
+
+  <!-- DB subnet AZ1 -->
+  <rect x="100" y="946" width="470" height="114" fill="#EAF2FF" stroke="#527FFF" stroke-width="1"/>
+  <text x="335" y="968" font-size="12" font-weight="bold" fill="#527FFF" text-anchor="middle">DB Subnet (private)  10.0.30.0/24</text>
+  <g>
+    <rect x="130" y="978" width="150" height="52" rx="4" fill="#527FFF"/>
+    <text x="205" y="1000" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Amazon RDS</text>
+    <text x="205" y="1017" font-size="11" fill="#ffffff" text-anchor="middle">PostgreSQL (primary)</text>
+  </g>
+  <g>
+    <rect x="310" y="978" width="150" height="52" rx="4" fill="#527FFF"/>
+    <text x="385" y="1000" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">ElastiCache</text>
+    <text x="385" y="1017" font-size="11" fill="#ffffff" text-anchor="middle">Redis — cache</text>
+  </g>
+
+  <!-- DB subnet AZ2 -->
+  <rect x="630" y="946" width="470" height="114" fill="#EAF2FF" stroke="#527FFF" stroke-width="1"/>
+  <text x="865" y="968" font-size="12" font-weight="bold" fill="#527FFF" text-anchor="middle">DB Subnet (private)  10.0.31.0/24</text>
+  <g>
+    <rect x="660" y="978" width="150" height="52" rx="4" fill="#527FFF"/>
+    <text x="735" y="1000" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Amazon RDS</text>
+    <text x="735" y="1017" font-size="11" fill="#ffffff" text-anchor="middle">PostgreSQL (standby)</text>
+  </g>
+  <g>
+    <rect x="840" y="978" width="150" height="52" rx="4" fill="#527FFF"/>
+    <text x="915" y="1000" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">ElastiCache</text>
+    <text x="915" y="1017" font-size="11" fill="#ffffff" text-anchor="middle">Redis — replica</text>
+  </g>
+
+  <!-- Arrows: app -> db -->
+  <line x1="235" y1="926" x2="235" y2="975" stroke="#527FFF" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="255" y="955" font-size="11" font-weight="bold" fill="#527FFF">PostgreSQL :5432</text>
+  <line x1="385" y1="926" x2="385" y2="975" stroke="#527FFF" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowBlue)"/>
+  <text x="400" y="955" font-size="11" fill="#527FFF">Redis :6379</text>
+  <line x1="765" y1="926" x2="765" y2="975" stroke="#527FFF" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <line x1="915" y1="926" x2="915" y2="975" stroke="#527FFF" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowBlue)"/>
+
+  <!-- RDS replication across AZs -->
+  <line x1="280" y1="1004" x2="657" y2="1004" stroke="#527FFF" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowBlue)"/>
+  <text x="468" y="993" font-size="11" fill="#527FFF" text-anchor="middle">Multi-AZ sync replication</text>
+
+  <!-- Footer notes -->
+  <text x="600" y="1140" font-size="12" fill="#555555" text-anchor="middle">DeletionPolicy: Snapshot on RDS — deleting the stack never silently deletes the database.</text>
+  <text x="600" y="1162" font-size="12" fill="#555555" text-anchor="middle">Every resource is created in dependency order; a failed resource rolls the whole stack back automatically.</text>
+</svg>
