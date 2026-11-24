@@ -17,6 +17,10 @@
 
 ---
 
+## 🌍 In plain words — what is this, really?
+
+Think of building the same warehouse over and over: without a plan, workers decide shelf positions from memory, every warehouse ends up slightly different, and nobody can rebuild an identical one after a fire. CloudFormation is the full written blueprint plus a tireless construction crew — you describe every shelf, door, and power line in one text file, hand it over, and the crew builds exactly that, in the right order, every single time. That text file is the template, and one built warehouse is a stack: change the blueprint, preview exactly what will be added or demolished with a change set, and the crew updates the real building to match. If someone later moves a shelf by hand, drift detection notices the building no longer matches the blueprint. Deleting the stack is the reverse: the crew tears down everything the blueprint created, except the parts you marked "keep this" with a deletion policy, like the stock archive. In technical terms this is Infrastructure as Code — your VPCs, instances, and databases become versioned, repeatable, and reviewable, just like application code.
+
 ## 🧩 The Pieces, in One Picture
 
 | Piece | What it does | Think of it as |
@@ -177,12 +181,6 @@ aws cloudformation delete-stack --stack-name cfn-demo
 - **Updating a stack someone else is updating** — concurrent updates fail with `ValidationError`. One writer at a time; use a CI pipeline as the single writer.
 - **Forgetting `CAPABILITY_NAMED_IAM`** — any template creating IAM resources needs the capability flag, or the deploy fails with a confusing permissions error.
 - **Stack stuck in `UPDATE_ROLLBACK_FAILED`** — usually a resource that can't be deleted (non-empty S3 bucket, ENI in use). Fix the resource, then `continue-update-rollback`.
-
----
-
-## 📝 Quiz
-
-Think you know it? Five questions in [`quiz.md`](quiz.md) — including the classic "my update deleted the database" puzzle.
 
 ---
 
